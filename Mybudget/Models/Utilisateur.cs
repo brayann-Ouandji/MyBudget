@@ -1,5 +1,4 @@
-﻿using Mybudget.Controllers;
-using Mybudget.Models;
+﻿using Mybudget.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

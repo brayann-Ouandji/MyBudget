@@ -23,7 +23,7 @@ namespace MyBudget.Models
         public OperationType TypeOperation { get; set; }
         [ForeignKey("Utilisateur")]
         public int UserId { get; set; }
-        public required Utilisateur utilisateur { get; set; }
+        public required Utilisateur Utilisateur { get; set; }
         public virtual ICollection<Transaction>? Transactions { get; set; }
 
     }

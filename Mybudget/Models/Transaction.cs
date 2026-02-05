@@ -1,4 +1,4 @@
-﻿using Mybudget.Controllers;
+﻿using MyBudget.Models;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -27,4 +27,4 @@ namespace MyBudget.Models
         public required Categorie Categorie { get; set; }
     }
 }
-}
+
