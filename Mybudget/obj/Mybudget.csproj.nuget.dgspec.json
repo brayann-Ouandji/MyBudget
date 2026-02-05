@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\64237703\\source\\repos\\MyBudget\\Mybudget\\Mybudget.csproj": {}
+    "C:\\Users\\63790667\\Source\\Repos\\MyBudget\\Mybudget\\Mybudget.csproj": {}
   },
   "projects": {
-    "C:\\Users\\64237703\\source\\repos\\MyBudget\\Mybudget\\Mybudget.csproj": {
+    "C:\\Users\\63790667\\Source\\Repos\\MyBudget\\Mybudget\\Mybudget.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\64237703\\source\\repos\\MyBudget\\Mybudget\\Mybudget.csproj",
+        "projectUniqueName": "C:\\Users\\63790667\\Source\\Repos\\MyBudget\\Mybudget\\Mybudget.csproj",
         "projectName": "Mybudget",
-        "projectPath": "C:\\Users\\64237703\\source\\repos\\MyBudget\\Mybudget\\Mybudget.csproj",
-        "packagesPath": "C:\\Users\\64237703\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\64237703\\source\\repos\\MyBudget\\Mybudget\\obj\\",
+        "projectPath": "C:\\Users\\63790667\\Source\\Repos\\MyBudget\\Mybudget\\Mybudget.csproj",
+        "packagesPath": "C:\\Users\\63790667\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\63790667\\Source\\Repos\\MyBudget\\Mybudget\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\64237703\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\63790667\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -49,6 +49,20 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.23, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.23, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[8.0.23, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
