@@ -25,4 +25,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
+{
+    var context = serviceScope.ServiceProvider.GetRequiredService<MybudgetContext>();
+    //context.Database.EnsureDeleted();
+    context.Database.EnsureCreated();
+}
 app.Run();
