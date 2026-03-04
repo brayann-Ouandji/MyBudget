@@ -23,14 +23,15 @@ namespace Mybudget.Controllers
 
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Categorie>>> GetCategorie()
+        public async Task<ActionResult<IEnumerable<Categorie>>> GetCategorie(int userId)
         {
-            return await _context.Categorie.ToListAsync();
+            return await _context.Categorie.Where(c => c.UserId == userId)
+                                           .ToListAsync();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Categorie>> GetCategorie(int id)
+        public async Task<ActionResult<Categorie>> GetCategorieById(int id)
         {
             var categorie = await _context.Categorie.FindAsync(id);
 
