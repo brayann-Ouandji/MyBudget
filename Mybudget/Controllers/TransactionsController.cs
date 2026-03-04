@@ -22,15 +22,19 @@ namespace Mybudget.Controllers
         }
 
         // GET: api/Transactions
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransaction()
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<IEnumerable<Transaction>>> GetTransaction(int userId)
         {
-            return await _context.Transaction.ToListAsync();
+            return await _context.Transaction
+                                 .Where(t => t.UserId == userId)
+                                 .Include(t => t.Categorie) // Jointure pour avoir le nom de la catégorie
+                                 .OrderByDescending(t => t.DateOperation)
+                                  .ToListAsync();
         }
 
         // GET: api/Transactions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Transaction>> GetTransaction(int id)
+        public async Task<ActionResult<Transaction>> GetTransactionById(int id)
         {
             var transaction = await _context.Transaction.FindAsync(id);
 
