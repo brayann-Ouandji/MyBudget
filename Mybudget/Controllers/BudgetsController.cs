@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Mybudget.Data;
+using Mybudget.Filters;
 using Mybudget.Models;
 
 namespace Mybudget.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequireLogin]
     public class BudgetsController : ControllerBase
     {
         private readonly MybudgetContext _context;

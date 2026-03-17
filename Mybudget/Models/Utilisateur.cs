@@ -7,13 +7,20 @@ namespace MyBudget.Models
     [Table("User")]
     public class Utilisateur
     {
+        public Utilisateur(string Email, string Prenom, string Nom)
+        {
+            this.Email = Email;
+            this.Prenom = Prenom;
+            this.Nom = Nom;
+        }
+
         [Key]
         public int Id { get; set; }
         [Required]
         [Column("Name")]
         public string? Nom { get; set; }
         [Column("Surname")]
-        public string? Prénom { get; set; }
+        public string? Prenom { get; set; }
         [Required]
         [EmailAddress]
         [Column("Email")]
@@ -22,7 +29,7 @@ namespace MyBudget.Models
         [Required]
         public string? MotDePasse { get; set; }
         [Column("InscriptionDate")]
-        public DateTime DateInscription { get; set; }
+        public DateTime DateInscription { get; set; } = DateTime.UtcNow;
         public virtual ICollection<Transaction>? Transactions { get; set; }
         public virtual ICollection<Categorie>? Categories { get; set; }
         public virtual ICollection<Budget>? Budgets { get; set; }
