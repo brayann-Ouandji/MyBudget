@@ -127,7 +127,7 @@
     "ContainingType": "Mybudget.Controllers.BudgetsController",
     "Method": "PutBudget",
     "RelativePath": "api/Budgets/{id}",
-    "HttpMethod": "PUT",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -138,7 +138,7 @@
       },
       {
         "Name": "budget",
-        "Type": "Mybudget.Models.Budget",
+        "Type": "Mybudget.Dtos.UpdateBudgetDto",
         "IsRequired": true
       }
     ],
@@ -236,7 +236,7 @@
     "ContainingType": "Mybudget.Controllers.CategoriesController",
     "Method": "PutCategorie",
     "RelativePath": "api/Categories/{id}",
-    "HttpMethod": "PUT",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -247,7 +247,7 @@
       },
       {
         "Name": "categorie",
-        "Type": "MyBudget.Models.Categorie",
+        "Type": "Mybudget.Dtos.UpdateCategoryDto",
         "IsRequired": true
       }
     ],
@@ -343,9 +343,9 @@
   },
   {
     "ContainingType": "Mybudget.Controllers.TransactionsController",
-    "Method": "PutTransaction",
+    "Method": "PatchTransaction",
     "RelativePath": "api/Transactions/{id}",
-    "HttpMethod": "PUT",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
@@ -355,8 +355,8 @@
         "IsRequired": true
       },
       {
-        "Name": "transaction",
-        "Type": "MyBudget.Models.Transaction",
+        "Name": "dto",
+        "Type": "Mybudget.Dtos.UpdateTransactionDto",
         "IsRequired": true
       }
     ],
@@ -402,13 +402,13 @@
     "ContainingType": "Mybudget.Controllers.UtilisateursController",
     "Method": "UpdateMe",
     "RelativePath": "api/Utilisateurs/me",
-    "HttpMethod": "PUT",
+    "HttpMethod": "PATCH",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "MyBudget.Models.Utilisateur",
+        "Type": "Mybudget.Dtos.UpdateUserDto",
         "IsRequired": true
       }
     ],
