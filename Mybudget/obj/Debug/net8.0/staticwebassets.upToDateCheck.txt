@@ -1,3 +1,7 @@
 wwwroot\CSS\login.css
+wwwroot\CSS\register.css
+wwwroot\dashboard.html
 wwwroot\JS\login.js
+wwwroot\JS\register.js
 wwwroot\login.html
+wwwroot\register.html

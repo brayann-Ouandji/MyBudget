@@ -508,5 +508,5 @@ C:\Users\bpenw\source\repos\MyBudget\MyBudget\obj\Debug\net8.0\refint\Mybudget.d
 C:\Users\bpenw\source\repos\MyBudget\MyBudget\obj\Debug\net8.0\Mybudget.pdb
 C:\Users\bpenw\source\repos\MyBudget\MyBudget\obj\Debug\net8.0\Mybudget.genruntimeconfig.cache
 C:\Users\bpenw\source\repos\MyBudget\MyBudget\obj\Debug\net8.0\ref\Mybudget.dll
-C:\Users\bpenw\source\repos\MyBudget\Mybudget\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\bpenw\source\repos\MyBudget\Mybudget\bin\Debug\net8.0\Mybudget.staticwebassets.runtime.json
+C:\Users\bpenw\source\repos\MyBudget\Mybudget\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
