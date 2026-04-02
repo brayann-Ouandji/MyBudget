@@ -1,17 +1,21 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Mybudget.Data;
+using Mybudget.Dtos;
+using Mybudget.Filters;
+using Mybudget.Models;
+using MyBudget.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyBudget.Models;
-using Mybudget.Data;
 
 namespace Mybudget.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequireLogin]
     public class CategoriesController : ControllerBase
     {
         private readonly MybudgetContext _context;
@@ -21,75 +25,96 @@ namespace Mybudget.Controllers
             _context = context;
         }
 
+        private int GetUserId()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+                throw new UnauthorizedAccessException("Utilisateur non connecté.");
+
+            return userId.Value;
+        }
+
         // GET: api/Categories
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Categorie>>> GetCategorie(int userId)
+        public async Task<ActionResult<IEnumerable<Categorie>>> GetCategories()
         {
-            return await _context.Categorie.Where(c => c.UserId == userId)
-                                           .ToListAsync();
+            var userId = GetUserId();
+
+            var categories = await _context.Categorie
+                .Where(c => c.UserId == userId)
+                .ToListAsync();
+
+            return Ok(categories);
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Categorie>> GetCategorieById(int id)
         {
-            var categorie = await _context.Categorie.FindAsync(id);
+            var userId = GetUserId();
+
+            var categorie = await _context.Categorie
+                .FirstOrDefaultAsync(c => c.id == id && c.UserId == userId);
 
             if (categorie == null)
             {
                 return NotFound();
             }
 
-            return categorie;
+            return Ok(categorie);
         }
 
         // PUT: api/Categories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategorie(int id, Categorie categorie)
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PutCategorie(int id, UpdateCategoryDto categorie)
         {
-            if (id != categorie.id)
+            var userId = GetUserId();
+
+
+            var existingCategorie = await _context.Categorie
+                .FirstOrDefaultAsync(c => c.id == id && c.UserId == userId);
+
+            if (existingCategorie == null)
             {
-                return BadRequest();
+                return NotFound();
             }
 
-            _context.Entry(categorie).State = EntityState.Modified;
+            // On met à jour seulement les champs autorisés
+            if(categorie.Nom != null) existingCategorie.Nom = categorie.Nom;
+            // ajoute ici les autres champs modifiables si besoin
+            if (categorie.TypeOperation != null) existingCategorie.TypeOperation = (OperationType)categorie.TypeOperation;
+            if (categorie.Couleur != null) existingCategorie.Couleur = categorie.Couleur;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategorieExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
         // POST: api/Categories
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Categorie>> PostCategorie(Categorie categorie)
         {
+            var userId = GetUserId();
+
+            // On force l'appartenance à l'utilisateur connecté
+            categorie.UserId = userId;
+
             _context.Categorie.Add(categorie);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategorie", new { id = categorie.id }, categorie);
+            return CreatedAtAction(nameof(GetCategorieById), new { id = categorie.id }, categorie);
         }
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategorie(int id)
         {
-            var categorie = await _context.Categorie.FindAsync(id);
+            var userId = GetUserId();
+
+            var categorie = await _context.Categorie
+                .FirstOrDefaultAsync(c => c.id == id && c.UserId == userId);
+
             if (categorie == null)
             {
                 return NotFound();
@@ -103,7 +128,9 @@ namespace Mybudget.Controllers
 
         private bool CategorieExists(int id)
         {
-            return _context.Categorie.Any(e => e.id == id);
+            var userId = GetUserId();
+
+            return _context.Categorie.Any(e => e.id == id && e.UserId == userId);
         }
     }
 }

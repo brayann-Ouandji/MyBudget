@@ -1,17 +1,21 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Mybudget.Data;
+using Mybudget.Dtos;
+using Mybudget.Filters;
+using MyBudget.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MyBudget.Models;
-using Mybudget.Data;
 
 namespace Mybudget.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequireLogin]
     public class UtilisateursController : ControllerBase
     {
         private readonly MybudgetContext _context;
@@ -21,82 +25,51 @@ namespace Mybudget.Controllers
             _context = context;
         }
 
-        // GET: api/Utilisateurs
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Utilisateur>>> GetUtilisateur()
-        {
-            return await _context.Utilisateur.ToListAsync();
-        }
-
         // GET: api/Utilisateurs/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Utilisateur>> GetUtilisateur(int id)
+        [HttpGet("me")]
+        public async Task<ActionResult<Utilisateur>> Me()
         {
-            var utilisateur = await _context.Utilisateur.FindAsync(id);
+            int userId = HttpContext.Session.GetInt32("UserId")!.Value;
 
-            if (utilisateur == null)
-            {
-                return NotFound();
-            }
+            var utilisateur = await _context.Utilisateur.FindAsync(userId);
+            if (utilisateur == null) return NotFound();
 
             return utilisateur;
         }
 
         // PUT: api/Utilisateurs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUtilisateur(int id, Utilisateur utilisateur)
+        [HttpPatch("me")]  
+        public async Task<IActionResult> UpdateMe([FromBody] UpdateUserDto dto)
         {
-            if (id != utilisateur.Id)
-            {
-                return BadRequest();
-            }
+            int userId = HttpContext.Session.GetInt32("UserId")!.Value;
+            var utilisateur = await _context.Utilisateur.FindAsync(userId);
+            if (utilisateur == null) return NotFound();
 
-            _context.Entry(utilisateur).State = EntityState.Modified;
+            if (dto.Nom != null) utilisateur.Nom = dto.Nom;
+            if (dto.Prenom != null) utilisateur.Prenom = dto.Prenom;
+            if (dto.Email != null) utilisateur.Email = dto.Email;
+            if (dto.MotDePasse != null)
+                utilisateur.MotDePasse = new PasswordHasher<Utilisateur>()
+                                            .HashPassword(utilisateur, dto.MotDePasse);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UtilisateurExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            await _context.SaveChangesAsync();
             return NoContent();
         }
 
-        // POST: api/Utilisateurs
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Utilisateur>> PostUtilisateur(Utilisateur utilisateur)
-        {
-            _context.Utilisateur.Add(utilisateur);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetUtilisateur", new { id = utilisateur.Id }, utilisateur);
-        }
-
         // DELETE: api/Utilisateurs/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUtilisateur(int id)
+        [HttpDelete("me")]
+        public async Task<IActionResult> DeleteMe()
         {
-            var utilisateur = await _context.Utilisateur.FindAsync(id);
-            if (utilisateur == null)
-            {
-                return NotFound();
-            }
+            int userId = HttpContext.Session.GetInt32("UserId")!.Value;
+
+            var utilisateur = await _context.Utilisateur.FindAsync(userId);
+            if (utilisateur == null) return NotFound();
 
             _context.Utilisateur.Remove(utilisateur);
             await _context.SaveChangesAsync();
 
+            HttpContext.Session.Clear(); // déconnexion
             return NoContent();
         }
 
