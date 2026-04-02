@@ -56,7 +56,7 @@ namespace Mybudget.Controllers
 
         // POST: api/transactions
         [HttpPost]
-        public async Task<ActionResult<Transaction>> PostTransaction(Transaction transaction)
+        public async Task<ActionResult<Transaction>> PostTransaction( [FromBody] Transaction transaction)
         {
             var userId = GetUserId();
 

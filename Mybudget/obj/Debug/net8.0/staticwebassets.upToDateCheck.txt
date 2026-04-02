@@ -1,7 +1,14 @@
+wwwroot\CSS\dashboard.css
+wwwroot\CSS\global.css
 wwwroot\CSS\login.css
 wwwroot\CSS\register.css
+wwwroot\CSS\transactions.css
 wwwroot\dashboard.html
+wwwroot\JS\auth.js
+wwwroot\JS\dashboard.js
 wwwroot\JS\login.js
 wwwroot\JS\register.js
 wwwroot\login.html
 wwwroot\register.html
+wwwroot\transactions.html
+wwwroot\JS\transactions.js
