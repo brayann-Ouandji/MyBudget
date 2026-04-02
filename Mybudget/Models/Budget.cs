@@ -11,7 +11,7 @@ namespace Mybudget.Models
         public int Id { get; set; }
         [Required]
         [Column("LimitAmount")]
-        public decimal MontatnLimite { get; set; }
+        public decimal MontantLimite { get; set; }
         [Column("Month")]
         [Required]
         public int Mois { get; set; }

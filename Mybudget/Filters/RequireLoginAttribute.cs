@@ -7,10 +7,9 @@ namespace Mybudget.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            var session = context.HttpContext.Session;
-            var userId = session.GetInt32("UserId");
+            var userId = context.HttpContext.Session.GetInt32("UserId");
 
-            if (session == null || userId == null)
+            if (userId == null)
             {
                 context.Result = new ObjectResult(new { message = "Authentification requise" })
                 {
@@ -23,4 +22,3 @@ namespace Mybudget.Filters
         }
     }
 }
-

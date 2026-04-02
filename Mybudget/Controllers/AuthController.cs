@@ -24,7 +24,7 @@ namespace Mybudget.Controllers
             _hash = new PasswordHasher<Utilisateur>();
         }
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromForm] RegisterDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.MotDePasse))
                 return BadRequest(new { error = "Email et Mot de passe requis" });
@@ -45,7 +45,7 @@ namespace Mybudget.Controllers
             return Ok(new { message = "Enregistrement réussi" });
         }
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromForm] LoginDto dto)
+        public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.MotDePasse))
                 return BadRequest(new { error = "Email et Mot de passe requis" });

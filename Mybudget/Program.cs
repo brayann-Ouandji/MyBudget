@@ -1,30 +1,27 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Session;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Mybudget.Data;
-using Mybudget.Models;
+
 var builder = WebApplication.CreateBuilder(args);
-/*builder.Services.AddDbContext<MybudgetContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MybudgetContext") ?? throw new InvalidOperationException("Connection string 'MybudgetContext' not found.")));*/
+
 var cs = builder.Configuration.GetConnectionString("MybudgetContext");
 
 builder.Services.AddDbContext<MybudgetContext>(options =>
-    options.UseMySql(cs ?? throw new InvalidOperationException("Connection string 'MybudgetContext' not found."), ServerVersion.AutoDetect(cs)));
-// Add services to the container.
+    options.UseMySql(cs ?? throw new InvalidOperationException("Connection string 'MybudgetContext' not found."),
+    ServerVersion.AutoDetect(cs)));
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDistributedMemoryCache(); // stockage session en RAM
+
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -36,23 +33,23 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseSession();
-app.UseHttpsRedirection();
-app.UseAuthentication();
-app.UseAuthorization();
 
-app.MapControllers();
+app.UseHttpsRedirection(); //  redirige HTTP vers HTTPS
+app.UseStaticFiles();      //  sert les fichiers de wwwroot
+app.UseSession();          //  active les sessions
+app.UseAuthentication();   //  vérifie qui tu es
+app.UseAuthorization();    //  vérifie ce que tu as le droit de faire
+app.MapControllers();      // route vers les contrôleurs
 
-using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
+using (var scope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
-    var context = serviceScope.ServiceProvider.GetRequiredService<MybudgetContext>();
-    //context.Database.EnsureDeleted();
+    var context = scope.ServiceProvider.GetRequiredService<MybudgetContext>();
     context.Database.EnsureCreated();
 }
+
 app.Run();
