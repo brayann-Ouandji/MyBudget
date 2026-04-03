@@ -11,7 +11,6 @@ async function init() {
 
     //  Charger les données en parallèle
     // Promise.all lance les deux fetch EN MÊME TEMPS
-    // au lieu de les attendre l'un après l'autre — plus rapide !
     const [transactions, budgets] = await Promise.all([
         fetchTransactions(),
         fetchBudgets()
@@ -142,7 +141,7 @@ function afficherBudgets(budgets) {
       <div class="budget-item">
         <div class="budget-header">
           <span>${b.categorie ? b.categorie.nom : "Catégorie"}</span>
-          <span>${b.depenseActuelle?.toLocaleString("fr-FR")} / ${b.plafond?.toLocaleString("fr-FR")} €</span>
+          <span>${b.depenseActuelle?.toLocaleString("fr-FR")} / ${b.MontantLimite?.toLocaleString("fr-FR")} €</span>
         </div>
         <div class="budget-bar">
           <div class="budget-fill ${fillClass}" style="width: ${pct}%"></div>

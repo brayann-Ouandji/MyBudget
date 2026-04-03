@@ -12,13 +12,13 @@
 
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="navbar-brand">💰 MyBudget</div>
+        <div class="navbar-brand">MyBudget</div>
         <div class="navbar-links">
             <a href="/dashboard.html">Dashboard</a>
             <a href="/transactions.html">Transactions</a>
             <a href="/categories.html">Catégories</a>
             <a href="/budgets.html">Budgets</a>
-            <a href="/profil.html">Mon Profil</a>
+            <a href="/profil.html" class="active">Mon Profil</a>
         </div>
         <div class="navbar-user">
             <span id="user-email"></span>
@@ -63,3 +63,55 @@
                     <div class="col">
                         <label class="form-label">Prénom</label>
                         <input type="text" id="prenom" class="form-control" />
+                    </div>
+                    <div class="col">
+                        <label class="form-label">Nom</label>
+                        <input type="text" id="nom" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="email" class="form-control" />
+                </div>
+
+                <hr class="my-3" />
+
+                <p class="text-muted" style="font-size:0.88rem">
+                    Laissez les champs mot de passe vides si vous ne souhaitez pas le modifier.
+                </p>
+
+                <div class="mb-3">
+                    <label class="form-label">Nouveau mot de passe</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" />
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label">Confirmer le mot de passe</label>
+                    <input type="password" id="password-confirm" class="form-control" placeholder="••••••••" />
+                </div>
+
+                <button type="submit" class="btn-primary-custom" id="submit-btn">
+                    Enregistrer les modifications
+                </button>
+
+            </form>
+        </div>
+
+        <!-- Zone danger — suppression du compte -->
+        <div class="section-card danger-zone">
+            <h2 style="color:#dc3545">Zone de danger</h2>
+            <p class="text-muted" style="font-size:0.9rem; margin: 0.75rem 0">
+                La suppression de votre compte est irréversible. Toutes vos données seront perdues.
+            </p>
+            <button onclick="supprimerCompte()" class="btn-delete-account">
+                Supprimer mon compte
+            </button>
+        </div>
+
+    </main>
+
+    <script src="/js/auth.js"></script>
+    <script src="/js/profil.js"></script>
+</body>
+</html>

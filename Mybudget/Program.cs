@@ -13,7 +13,7 @@ builder.Services.AddDbContext<MybudgetContext>(options =>
 builder.Services.AddControllers()
     .AddJsonOptions(options => {
         // Ignore les références circulaires au lieu de planter
-        options.JsonSerializerOptions.ReferenceHandler =
+        options.JsonSerializerOptions.ReferenceHandler = 
             System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
     });
 builder.Services.AddEndpointsApiExplorer();
@@ -51,12 +51,10 @@ app.UseAuthentication();   //  vérifie qui tu es
 app.UseAuthorization();    //  vérifie ce que tu as le droit de faire
 app.MapControllers();      // route vers les contrôleurs
 
-#pragma warning disable CS8602 // Déréférencement d'une éventuelle référence null.
 using (var scope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<MybudgetContext>();
     context.Database.EnsureCreated();
 }
-#pragma warning restore CS8602 // Déréférencement d'une éventuelle référence null.
 
 app.Run();
