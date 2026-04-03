@@ -200,3 +200,49 @@
     .budget-fill.exceeded {
         background: #dc3545;
     }
+
+/* ── Profil ── */
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+    .info-row:last-child {
+        border-bottom: none;
+    }
+
+.info-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.info-value {
+    font-size: 0.95rem;
+    color: var(--text);
+    font-weight: 500;
+}
+
+/* ── Zone de danger ── */
+.danger-zone {
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+}
+
+.btn-delete-account {
+    background: none;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+
+    .btn-delete-account:hover {
+        background: var(--danger);
+        color: #fff;
+    }
