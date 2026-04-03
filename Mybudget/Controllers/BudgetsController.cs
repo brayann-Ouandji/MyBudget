@@ -53,7 +53,7 @@ namespace Mybudget.Controllers
 
         // POST: api/budgets
         [HttpPost]
-        public async Task<ActionResult<Budget>> PostBudget(Budget budget)
+        public async Task<ActionResult<Budget>> PostBudget([FromBody] Budget budget)
         {
             var userId = GetUserId();
 
@@ -67,7 +67,7 @@ namespace Mybudget.Controllers
 
         // PATCH: api/budgets/{id}
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PutBudget(int id, UpdateBudgetDto budget)
+        public async Task<IActionResult> PutBudget( int id, [FromBody] UpdateBudgetDto budget)
         {
             var userId = GetUserId();
 

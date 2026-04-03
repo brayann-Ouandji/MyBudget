@@ -21,12 +21,12 @@ namespace Mybudget.Models
         [ForeignKey("Utilisateur")]
         public int UserId { get; set; }
         [ForeignKey(nameof(UserId))]
-        public required Utilisateur utilisateur { get; set; }
+        public Utilisateur? utilisateur { get; set; }
         [ForeignKey("Categorie")]
         public int CategoryId { get; set; }
         //Propriété de navigation
         [ForeignKey(nameof(CategoryId))]
-        public required Categorie Categorie { get; set; }
+        public Categorie? Categorie { get; set; }
 
     }
 }

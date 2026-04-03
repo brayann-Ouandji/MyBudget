@@ -14,3 +14,5 @@ wwwroot\JS\transactions.js
 wwwroot\transactions.html
 wwwroot\JS\categories.js
 wwwroot\categories.html
+wwwroot\budgets.html
+wwwroot\JS\budgets.js

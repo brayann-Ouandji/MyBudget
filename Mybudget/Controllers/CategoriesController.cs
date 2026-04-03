@@ -67,7 +67,7 @@ namespace Mybudget.Controllers
 
         // PUT: api/Categories/5
         [HttpPatch("{id}")]
-        public async Task<IActionResult> PutCategorie(int id, UpdateCategoryDto categorie)
+        public async Task<IActionResult> PutCategorie(int id, [FromBody] UpdateCategoryDto categorie)
         {
             var userId = GetUserId();
 
