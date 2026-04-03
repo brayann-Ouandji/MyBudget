@@ -93,7 +93,7 @@ namespace Mybudget.Controllers
 
         // POST: api/Categories
         [HttpPost]
-        public async Task<ActionResult<Categorie>> PostCategorie(Categorie categorie)
+        public async Task<ActionResult<Categorie>> PostCategorie([FromBody] Categorie categorie)
         {
             var userId = GetUserId();
 

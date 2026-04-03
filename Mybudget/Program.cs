@@ -10,7 +10,12 @@ builder.Services.AddDbContext<MybudgetContext>(options =>
     options.UseMySql(cs ?? throw new InvalidOperationException("Connection string 'MybudgetContext' not found."),
     ServerVersion.AutoDetect(cs)));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options => {
+        // Ignore les références circulaires au lieu de planter
+        options.JsonSerializerOptions.ReferenceHandler =
+            System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+    });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
